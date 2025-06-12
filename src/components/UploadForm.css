@@ -1,0 +1,24 @@
+.upload-form {
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.input-group input[type="file"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.success-text, .error-text {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+button {
+  white-space: nowrap;
+}
