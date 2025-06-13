@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
-import "./QueryBox.css"; // Import the CSS file for styles
+import "./QueryBox.css";
 
 interface QueryResponse {
   query: string;
@@ -34,16 +34,14 @@ const QueryBox: React.FC = () => {
     setError(null);
 
     try {
-      const res = await axios.post<QueryResponse>("http://localhost:8001/query", {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const res = await axios.post<QueryResponse>(`${apiUrl}/query`, {
         query: trimmedQuery,
         use_rag: true,
       });
 
-      console.log("API Response:", res.data);
-
       if (res.data?.response) {
         setResponse(res.data.response);
-        console.log("Setting response to:", res.data.response);
       } else {
         throw new Error("Invalid response format from server");
       }
@@ -58,7 +56,7 @@ const QueryBox: React.FC = () => {
   };
 
   return (
-    <div className="query-box" role="main" aria-label="Query Interface">
+    <div className="query-box" role="main" aria-labelledby="query-heading">
       <h2 id="query-heading">Ask a Question</h2>
       <form onSubmit={handleSubmit} aria-labelledby="query-heading" noValidate>
         <div className="input-group">
