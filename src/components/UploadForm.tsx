@@ -1,37 +1,76 @@
 import React, { useState } from "react";
-import axios from "axios";
+import type { FormEvent, ChangeEvent } from "react";
+import axios, { AxiosError } from "axios";
+import './UploadForm.css'; // Import the CSS file
 
 const UploadForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<string>("");
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  const handleUpload = async (e: React.FormEvent) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const selectedFile = e.target.files?.[0] || null;
+    setFile(selectedFile);
+    if (status) setStatus("");
+  };
+
+  const handleUpload = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    if (!file) return;
+    if (!file) {
+      setStatus("❌ Please select a file first.");
+      return;
+    }
+
+    setIsUploading(true);
+    setStatus("📤 Uploading document...");
 
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:8000/upload-document", formData);
-      setStatus("✅ Upload successful!");
-    } catch (err) {
-      setStatus("❌ Upload failed.");
+      await axios.post("http://localhost:8001/upload-document", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setStatus(`✅ Successfully uploaded ${file.name}!`);
+      setFile(null);
+    } catch (error) {
+      console.error('Upload error:', error);
+      const errorMessage = error instanceof AxiosError
+        ? error.response?.data?.message || error.message
+        : 'Unknown error occurred';
+      setStatus(`❌ Upload failed: ${errorMessage}`);
+    } finally {
+      setIsUploading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Upload Document</h2>
-      <form onSubmit={handleUpload}>
-        <input
-          type="file"
-          accept=".pdf,.docx,.txt"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-        />
-        <button type="submit">Upload</button>
+    <div className="upload-form" role="main" aria-label="Document Upload">
+      <h2 id="upload-heading">Upload Document</h2>
+      <form onSubmit={handleUpload} aria-labelledby="upload-heading">
+        <div className="input-group">
+          <input
+            type="file"
+            accept=".pdf,.docx,.txt"
+            onChange={handleFileChange}
+            disabled={isUploading}
+            aria-label="Choose file"
+            aria-required="true"
+          />
+          <button 
+            type="submit" 
+            disabled={isUploading || !file}
+            aria-busy={isUploading}
+          >
+            {isUploading ? "Uploading..." : "Upload"}
+          </button>
+        </div>
+        <p className={status.includes("❌") ? "error-text" : "success-text"} role="status">
+          {status}
+        </p>
       </form>
-      <p>{status}</p>
     </div>
   );
 };

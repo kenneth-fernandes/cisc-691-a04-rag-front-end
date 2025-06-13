@@ -1,14 +1,19 @@
 import React from "react";
 import UploadForm from "./components/UploadForm";
 import QueryBox from "./components/QueryBox";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="app-container">
       <h1>Retail Sales RAG System</h1>
-      <UploadForm />
+      <div className="section">
+        <UploadForm />
+      </div>
       <hr />
-      <QueryBox />
+      <div className="section">
+        <QueryBox />
+      </div>
     </div>
   );
 };
