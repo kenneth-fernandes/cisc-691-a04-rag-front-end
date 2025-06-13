@@ -44,7 +44,7 @@ Visit `http://localhost:5173` to access the application.
 
 ## API Integration
 
-The application connects to the following API endpoints:
+The application currently implements the following API endpoints:
 
 ```
 POST /api/documents/upload
@@ -55,11 +55,9 @@ POST /api/query
 - Submit questions about retail data
 - Request: { "query": "string" }
 - Response: { "answer": "string", "context": "string" }
-
-GET /api/documents
-- List all uploaded documents
-- Response: { "documents": Document[] }
 ```
+
+Note: Additional endpoints (POST /retrieve) will be implemented in future stages.
 
 ## Development
 

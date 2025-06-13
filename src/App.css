@@ -1,19 +1,25 @@
 :root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --background-color: #f8fafc;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --background-color: #f1f5f9;
+  --background-gradient: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  --container-gradient: linear-gradient(135deg, rgba(59, 130, 246, 0.95), rgba(37, 99, 235, 0.92));
+  --section-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(241, 245, 249, 0.95));
   --card-background: #ffffff;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
+  --text-primary: #1e3a8a;
+  --text-secondary: #1e40af;
   --error-color: #ef4444;
-  --success-color: #22c55e;
+  --success-color: #3b82f6;
   --border-radius: 8px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
 }
 
 body {
-  background-color: var(--background-color);
+  background: var(--background-gradient);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   color: var(--text-primary);
 }
 
@@ -29,21 +35,41 @@ body {
   gap: 2rem;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2.5rem;
+  background: var(--container-gradient);
+  border: double 3px transparent;
+  border-radius: 32px;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 
+    0 8px 32px rgba(15, 23, 42, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
 }
 
 .section {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
+  background: var(--section-gradient);
+  border: 2px solid rgba(59, 130, 246, 0.15);
+  border-radius: 24px;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    inset 0 2px 8px rgba(255, 255, 255, 0.8);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
   min-height: 200px;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.125rem; /* Base font size for sections */
 }
 
 .section:hover {
   transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 
+    0 8px 28px rgba(0, 0, 0, 0.1),
+    inset 0 2px 8px rgba(255, 255, 255, 0.9);
 }
 
 .input-group {
@@ -54,25 +80,26 @@ body {
 
 .input-group input {
   flex: 1;
-  padding: 0.75rem;
+  padding: 0.875rem;
   border: 1px solid #e2e8f0;
   border-radius: var(--border-radius);
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 button {
-  padding: 12px 24px;
-  background-color: #3b82f6;
+  padding: 0.875rem 1.75rem;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  font-size: 1.125rem;
 }
 
 button:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: var(--primary-hover);
 }
 
 button:disabled {
@@ -81,15 +108,18 @@ button:disabled {
 }
 
 h1 {
-  color: #1e293b;
-  margin-bottom: 30px;
+  color: white;
+  margin-bottom: 2rem;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.025em;
 }
 
 hr {
@@ -98,56 +128,22 @@ hr {
   margin: 2rem 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 .response-container {
-  background-color: #f8fafc;
-  border-radius: var(--border-radius);
-  padding: 1rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.92));
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
   margin-top: 1rem;
-  border: 1px solid #e2e8f0;
+  border-radius: var(--border-radius);
+  font-size: 1.125rem;
 }
 
 .error-text {
   color: var(--error-color);
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .success-text {
   color: var(--success-color);
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
