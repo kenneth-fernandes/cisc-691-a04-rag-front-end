@@ -6,14 +6,16 @@ import "./App.css";
 const App: React.FC = () => {
   return (
     <div className="app-container">
-      <h1>Retail Sales RAG System</h1>
-      <div className="section">
-        <UploadForm />
-      </div>
-      <hr />
-      <div className="section">
-        <QueryBox />
-      </div>
+      <h1 role="heading" aria-level={1}>Retail Sales RAG System</h1>
+      <main>
+        <div className="section">
+          <UploadForm />
+        </div>
+        <hr />
+        <div className="section">
+          <QueryBox />
+        </div>
+      </main>
     </div>
   );
 };
