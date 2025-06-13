@@ -28,15 +28,15 @@ const UploadForm: React.FC = () => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:8001/upload-document", formData, {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      await axios.post(`${apiUrl}/upload-document`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       setStatus(`✅ Successfully uploaded ${file.name}!`);
       setFile(null);
     } catch (error) {
-      console.error('Upload error:', error);
       const errorMessage = error instanceof AxiosError
         ? error.response?.data?.message || error.message
         : 'Unknown error occurred';

@@ -1,21 +1,17 @@
 # Retail Sales Data Analysis Frontend
 
-A React-based frontend application for analyzing retail sales data using AI-powered insights. This application provides an intuitive interface for uploading documents and querying retail sales information.
-
-## Features
-
-- Upload and manage retail sales documents
-- Interactive query interface with AI-powered responses
-- Real-time response generation
-- Document context display
+A React-based frontend application for analyzing retail sales data using AI-powered insights.
 
 ## Prerequisites
 
-- Node.js 16+
+- Node.js 18+
 - npm or yarn
-- Backend API service (running on port 8000)
+- Docker (optional, for containerized deployment)
+- Backend API service (running on port 8001)
 
-## Quick Start
+## Installation & Running
+
+### Local Development
 
 1. Install dependencies:
 ```bash
@@ -25,7 +21,7 @@ npm install
 2. Configure environment:
 Create a `.env` file:
 ```
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8001
 ```
 
 3. Start development server:
@@ -35,12 +31,44 @@ npm run dev
 
 Visit `http://localhost:5173` to access the application.
 
-## Application Structure
+### Docker Deployment
 
-- `/src/components` - React components
-- `/src/api` - API integration services
-- `/src/types` - TypeScript type definitions
-- `/src/utils` - Utility functions
+1. The project includes a `.env.docker` file with the following configuration:
+```bash
+VITE_API_URL=http://localhost:8001
+```
+
+2. Build and run using Docker Compose:
+```bash
+# Build and start the container
+docker-compose up --build
+
+# Run in detached mode (optional)
+docker-compose up --build -d
+```
+
+The application will be available at `http://localhost:5173`
+
+To stop the container:
+```bash
+docker-compose down
+```
+
+### Manual Docker Build
+
+1. Build the Docker image:
+```bash
+docker build -t rag-frontend .
+```
+
+2. Run the container:
+```bash
+# Run with host network
+docker run -p 5173:80 --env-file .env.docker rag-frontend
+
+# Or with custom environment variable
+docker run -p 5173:80 -e VITE_API_URL=http://localhost:8001 rag-frontend
+```
 
 ## API Integration
 
@@ -61,55 +89,8 @@ Note: Additional endpoints (POST /retrieve) will be implemented in future stages
 
 ## Development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-### Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Built with:
+- React + TypeScript
+- Vite
+- Axios for API integration
+- Docker for containerization
