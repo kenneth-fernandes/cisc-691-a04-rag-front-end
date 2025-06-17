@@ -47,6 +47,9 @@ body {
   backdrop-filter: blur(12px);
 }
 
+.app-container .system-title {
+  font-size: 2.75em;
+}
 .section {
   background: var(--section-gradient);
   border: 2px solid rgba(59, 130, 246, 0.15);

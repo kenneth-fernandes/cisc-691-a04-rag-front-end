@@ -1,4 +1,3 @@
-import React from "react";
 import UploadForm from "./components/UploadForm";
 import QueryBox from "./components/QueryBox";
 import "./App.css";
@@ -6,7 +5,7 @@ import "./App.css";
 const App: React.FC = () => {
   return (
     <div className="app-container">
-      <h1 role="heading" aria-level={1}>Retail Sales RAG System</h1>
+      <h1 className="system-title">Retail Sales RAG System</h1>
       <main>
         <div className="section">
           <UploadForm />
