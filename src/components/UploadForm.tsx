@@ -35,7 +35,6 @@ const UploadForm: React.FC = () => {
         },
       });
       setStatus(`✅ Successfully uploaded ${file.name}!`);
-      setFile(null);
     } catch (error) {
       const errorMessage = error instanceof AxiosError
         ? error.response?.data?.message || error.message
